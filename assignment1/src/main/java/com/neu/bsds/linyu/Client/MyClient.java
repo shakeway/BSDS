@@ -31,17 +31,18 @@ public class MyClient {
         return resource.request(MediaType.TEXT_PLAIN).get(String.class);
     }
 
-    public static void main(String[] argv) {
-        MyClient mc = new MyClient("http://34.208.35.14:8080");
-        Response getResponse = mc.webTarget.request(MediaType.TEXT_PLAIN).get();
-        String getResult = getResponse.readEntity(String.class);
-        System.out.println(getResponse.getStatus());
-        System.out.println("get check: " + getResult);
-
-        Response postResponse = mc.webTarget.request(MediaType.TEXT_PLAIN).post(Entity.entity("test", MediaType.TEXT_PLAIN));
-        String postResult = postResponse.readEntity(String.class);
-        System.out.println(postResponse.getStatus());
-        System.out.println("post check: " + postResult);
-    }
+    //just to check the client can send request to server
+//    public static void main(String[] argv) {
+//        MyClient mc = new MyClient("http://34.208.35.14:8080");
+//        Response getResponse = mc.webTarget.request(MediaType.TEXT_PLAIN).get();
+//        String getResult = getResponse.readEntity(String.class);
+//        System.out.println(getResponse.getStatus());
+//        System.out.println("get check: " + getResult);
+//
+//        Response postResponse = mc.webTarget.request(MediaType.TEXT_PLAIN).post(Entity.entity("test", MediaType.TEXT_PLAIN));
+//        String postResult = postResponse.readEntity(String.class);
+//        System.out.println(postResponse.getStatus());
+//        System.out.println("post check: " + postResult);
+//    }
 
 }

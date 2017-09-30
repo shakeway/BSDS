@@ -34,7 +34,6 @@ public class MultithreadClient {
         //create and start client threads
         SingleThreadClient worker = new SingleThreadClient(url, iterationNum, metrics);
         for (int i = 0; i < threadNum; i++) {
-            //Thread worker = new Thread(new SingleThreadClient(url, iterationNum, metrics));
             executor.submit(worker);
         }
 

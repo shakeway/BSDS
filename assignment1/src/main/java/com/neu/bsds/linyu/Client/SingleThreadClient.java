@@ -31,24 +31,24 @@ public class SingleThreadClient extends Thread{
             //post
             long startTime = System.currentTimeMillis();
             int postResponse = myClient.postText("test", Integer.class);
+            long currentime = System.currentTimeMillis();
+            metrics.add(currentime - startTime);
             metrics.requestAdd();
             if (postResponse == 4) {
                 metrics.successAdd();
                 //System.out.println("request num: " + metrics.getRequestCount());
             }
-            long currentime = System.currentTimeMillis();
-            metrics.add(currentime - startTime);
 
             //get
             startTime = System.currentTimeMillis();
             String getResponse = myClient.getStatus();
+            currentime = System.currentTimeMillis();
+            metrics.add(currentime - startTime);
             metrics.requestAdd();
             if (getResponse.equals("Got it!")) {
                 metrics.successAdd();
                 //System.out.println("request num: " + metrics.getRequestCount());
             }
-            currentime = System.currentTimeMillis();
-            metrics.add(currentime - startTime);
 
         }
 

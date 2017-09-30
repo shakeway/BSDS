@@ -13,10 +13,7 @@ public class StartClient {
         int threadNum = 10;
         int iterationNum = 100;
 
-        if (args.length == 2) {
-            ipAddress = args[0];
-            port = args[1];
-        } else {
+        if (args.length > 0) {
             threadNum = Integer.parseInt(args[0]);
             iterationNum = Integer.parseInt(args[1]);
             ipAddress = args[2];
