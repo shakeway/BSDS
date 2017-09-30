@@ -5,17 +5,13 @@ package com.neu.bsds.linyu.Client;
  */
 public class SingleThreadClient extends Thread{
 
-//    private CyclicBarrier barrier;
+
     private String url;
     private int iterationNum;
-//    private int requestCount = 0;
-//    private int successCount = 0;
-//    private List<Long> latency = new ArrayList<Long>();
     private Metrics metrics;
     private MyClient myClient;
 
     public SingleThreadClient(String url, int iterationNum, Metrics metrics) {
-        //this.barrier = barrier;
         this.url = url;
         this.iterationNum = iterationNum;
         this.metrics = metrics;
@@ -25,7 +21,6 @@ public class SingleThreadClient extends Thread{
     @Override
     public void run() {
 
-        //MyClient mc = new MyClient(url);
         for (int i = 0; i < iterationNum; i++) {
 
             //post
