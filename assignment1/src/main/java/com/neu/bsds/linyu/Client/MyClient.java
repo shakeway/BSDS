@@ -12,18 +12,19 @@ import javax.ws.rs.core.Response;
  */
 public class MyClient {
 
-    private String url;
+    //private String url;
     private static WebTarget webTarget;
 
-    public MyClient(String url) {
-        this.url = url;
-        Client client = ClientBuilder.newClient();
-         this.webTarget = client.target(url).path("assign1/webapi/myresource");
+    public MyClient(WebTarget webTarget) {
+//        this.url = url;
+//        Client client = ClientBuilder.newClient();
+//         this.webTarget = client.target(url).path("assign1/webapi/myresource");
+        this.webTarget = webTarget;
     }
 
-    public <T> T postText(Object requestEntity, Class<T> responseType) throws ClientErrorException {
+    public Response postText(Object requestEntity) throws ClientErrorException {
         return webTarget.request(MediaType.TEXT_PLAIN)
-                .post(Entity.entity(requestEntity, MediaType.TEXT_PLAIN), responseType);
+                .post(Entity.entity(requestEntity, MediaType.TEXT_PLAIN));
     }
 
     public String getStatus() throws ClientErrorException {
@@ -33,7 +34,8 @@ public class MyClient {
 
     //just to check the client can send request to server
 //    public static void main(String[] argv) {
-//        MyClient mc = new MyClient("http://34.208.35.14:8080");
+//        //MyClient mc = new MyClient("http://34.208.35.14:8080");
+//        MyClient mc = new MyClient("http://localhost:8080");
 //        Response getResponse = mc.webTarget.request(MediaType.TEXT_PLAIN).get();
 //        String getResult = getResponse.readEntity(String.class);
 //        System.out.println(getResponse.getStatus());

@@ -1,21 +1,25 @@
 package com.neu.bsds.linyu.Client;
 
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.Response;
+
 /**
  * Created by linyuyu on 9/28/17.
  */
 public class SingleThreadClient extends Thread{
 
 
-    private String url;
+    //private String url;
     private int iterationNum;
     private Metrics metrics;
     private MyClient myClient;
+    private WebTarget webTarget;
 
-    public SingleThreadClient(String url, int iterationNum, Metrics metrics) {
-        this.url = url;
+    public SingleThreadClient(WebTarget webTarget, int iterationNum, Metrics metrics) {
+        this.webTarget = webTarget;
         this.iterationNum = iterationNum;
         this.metrics = metrics;
-        this.myClient = new MyClient(url);
+        this.myClient = new MyClient(this.webTarget);
     }
 
     @Override
@@ -25,14 +29,15 @@ public class SingleThreadClient extends Thread{
 
             //post
             long startTime = System.currentTimeMillis();
-            int postResponse = myClient.postText("test", Integer.class);
+            Response postResponse = myClient.postText("test");
             long currentime = System.currentTimeMillis();
             metrics.add(currentime - startTime);
             metrics.requestAdd();
-            if (postResponse == 4) {
+            if (postResponse.readEntity(String.class).length() == 4) {
                 metrics.successAdd();
                 //System.out.println("request num: " + metrics.getRequestCount());
             }
+            postResponse.close();
 
             //get
             startTime = System.currentTimeMillis();

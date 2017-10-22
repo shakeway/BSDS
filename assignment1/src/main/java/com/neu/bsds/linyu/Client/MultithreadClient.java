@@ -1,6 +1,10 @@
 package com.neu.bsds.linyu.Client;
 
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.concurrent.*;
 
 /**
@@ -13,11 +17,11 @@ public class MultithreadClient {
     private int iterationNum;
     private int requestCount;
     private int successCount;
-    private Metrics metrics;
+    private List<Metrics> metrics;
 
     //static CyclicBarrier barrier;
 
-    public MultithreadClient(String url, int threadNum, int iterationNum, Metrics metrics) {
+    public MultithreadClient(String url, int threadNum, int iterationNum, List<Metrics> metrics) {
         this.url = url;
         this.threadNum = threadNum;
         this.iterationNum = iterationNum;
@@ -32,8 +36,12 @@ public class MultithreadClient {
         System.out.println(String.format("start at: " + new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(startTime)));
 
         //create and start client threads
-        SingleThreadClient worker = new SingleThreadClient(url, iterationNum, metrics);
+        Client client = ClientBuilder.newClient();
+        WebTarget webTarget = client.target(url).path("assign1/webapi/myresource");
         for (int i = 0; i < threadNum; i++) {
+            Metrics mt = new Metrics();
+            metrics.add(mt);
+            SingleThreadClient worker = new SingleThreadClient(webTarget, iterationNum, mt);
             executor.submit(worker);
         }
 

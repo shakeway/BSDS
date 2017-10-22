@@ -1,5 +1,6 @@
 package com.neu.bsds.linyu.Client;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -13,7 +14,7 @@ public class StartClient {
         int threadNum = 10;
         int iterationNum = 100;
 
-        if (args.length > 0) {
+        if (args.length >= 0) {
             threadNum = Integer.parseInt(args[0]);
             iterationNum = Integer.parseInt(args[1]);
             ipAddress = args[2];
@@ -25,25 +26,30 @@ public class StartClient {
         System.out.println("thread number is: " + threadNum);
 
         String url = "http://" + ipAddress + ":" + port;
-        Metrics metrics = new Metrics();
+        //Metrics metrics = new Metrics();
+        List<Metrics> metrics = new ArrayList<Metrics>();
         MultithreadClient mc = new MultithreadClient(url, threadNum, iterationNum, metrics);
         mc.runMultithread();
         getMetrics(metrics);
     }
 
-    public static void getMetrics(Metrics metrics) {
+    public static void getMetrics(List<Metrics> metrics) {
 
-        System.out.println("Total number of request sent: " + metrics.getRequestCount());
-        System.out.println("Total number of successful reponses: " + metrics.getSuccessCount());
-
+        int numRequest = 0;
+        int numReponse = 0;
         int latencySum = 0;
-        List<Long> latencyList = metrics.getLatencyList();
-        Long[] latencyArray = latencyList.toArray(new Long[latencyList.size()]);
-        int size = latencyList.size();
-
-        for (long l: latencyList) {
-            latencySum += l;
+        List<Long> latencyList = new ArrayList<Long>();
+        for (int i = 0; i < metrics.size(); i++) {
+            numRequest += metrics.get(i).getRequestCount();
+            numReponse += metrics.get(i).getSuccessCount();
+            latencyList.addAll(metrics.get(i).getLatencyList());
+            latencySum += metrics.get(i).getLatencySum();
         }
+        System.out.println("Total number of request sent: " + numRequest);
+        System.out.println("Total number of successful reponses: " + numReponse);
+
+        Long[] latencyArray = latencyList.toArray(new Long[latencyList.size()]);
+        int size = latencyArray.length;
 
         double meanLatency = latencySum / size;
         System.out.println("Mean latencies for all requests is: " + meanLatency + " ms");

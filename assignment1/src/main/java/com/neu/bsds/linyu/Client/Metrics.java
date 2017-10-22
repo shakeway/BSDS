@@ -11,27 +11,35 @@ public class Metrics {
     private int requestCount = 0;
     private int successCount = 0;
 
-    public synchronized void add (long latency) {
+    public void add (long latency) {
         latencyList.add(latency);
     }
 
-    public synchronized void requestAdd () {
+    public void requestAdd () {
         requestCount++;
     }
 
-    public synchronized void successAdd() {
+    public void successAdd() {
         successCount++;
     }
 
-    public synchronized List<Long> getLatencyList() {
+    public List<Long> getLatencyList() {
         return latencyList;
     }
 
-    public synchronized int getRequestCount() {
+    public int getRequestCount() {
         return requestCount;
     }
 
-    public synchronized int getSuccessCount() {
+    public int getSuccessCount() {
         return successCount;
+    }
+
+    public int getLatencySum() {
+        int latencySum = 0;
+        for (int i = 0; i < latencyList.size(); i++) {
+            latencySum += latencyList.get(i);
+        }
+        return latencySum;
     }
 }
