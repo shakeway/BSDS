@@ -15,6 +15,7 @@ public class StartClient {
     public static void main(String[] args) {
         String ipAddress = "34.208.35.14";
         //String ipAddress = "localhost";
+        //String ipAddress = "34.215.68.92"; ip of Frank
         String port = "8080";
         int threadNum = 100;
 
@@ -28,21 +29,22 @@ public class StartClient {
         System.out.println("thread number is: " + threadNum);
 
         String url = "http://" + ipAddress + ":" + port + "/assignment2Server";
+        //String url = "http://" + ipAddress + ":" + port + "/SkieServer"; url of Frank
         List<Metrics> metrics = new ArrayList<Metrics>();
 
         //read csv file
-        List<SkierData> skierDataList = new ArrayList<SkierData>();
-        ReadRawData(skierDataList);
-        List<List<SkierData>> listOfThreadData = new ArrayList<>();
-        SplitRawData(skierDataList, threadNum, listOfThreadData);
+        List<SingleRideData> singleRideDataList = new ArrayList<SingleRideData>();
+        ReadRawData(singleRideDataList);
+        List<List<SingleRideData>> listOfThreadData = new ArrayList<>();
+        SplitRawData(singleRideDataList, threadNum, listOfThreadData);
 
         MultiThreadClient mc = new MultiThreadClient(url, threadNum, metrics, listOfThreadData);
         mc.runMultithread();
         getMetrics(metrics);
     }
 
-    public static void ReadRawData(List<SkierData> skierDataList) {
-        String csvFile = "/Users/linyuyu/MyFile/NEU/courses/BSDS/assignment/assign2/BSDSAssignment2Day1Test.csv";
+    public static void ReadRawData(List<SingleRideData> singleRideDataList) {
+        String csvFile = "/Users/linyuyu/MyFile/NEU/courses/BSDS/assignment/assign2/BSDSAssignment2Day1.csv";
         String line = "";
         String csvSplitBy = ",";
 
@@ -50,22 +52,22 @@ public class StartClient {
             br.readLine();
             while((line = br.readLine()) != null) {
                 String[] data = line.split(csvSplitBy);
-                SkierData sd = new SkierData(data[0], data[1], data[2], data[3], data[4]);
-                skierDataList.add(sd);
+                SingleRideData sd = new SingleRideData(data[0], data[1], data[2], Integer.valueOf(data[3]), data[4]);
+                singleRideDataList.add(sd);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void SplitRawData(List<SkierData> skierDataList, int threadNum, List<List<SkierData>> listOfThreadData) {
+    public static void SplitRawData(List<SingleRideData> singleRideDataList, int threadNum, List<List<SingleRideData>> listOfThreadData) {
         for(int i = 0; i < threadNum; i++) {
-            listOfThreadData.add(new ArrayList<SkierData>());
+            listOfThreadData.add(new ArrayList<SingleRideData>());
         }
 
-        for (int i = 0; i < skierDataList.size(); i++) {
+        for (int i = 0; i < singleRideDataList.size(); i++) {
             int index = i % threadNum;
-            listOfThreadData.get(index).add(skierDataList.get(i));
+            listOfThreadData.get(index).add(singleRideDataList.get(i));
         }
     }
 

@@ -15,9 +15,9 @@ public class MultiThreadClient {
     private String url;
     private int threadNum;
     private List<Metrics> metrics;
-    private List<List<SkierData>> listOfThreadData;
+    private List<List<SingleRideData>> listOfThreadData;
 
-    public MultiThreadClient(String url, int threadNum, List<Metrics> metrics, List<List<SkierData>> listOfThreadData) {
+    public MultiThreadClient(String url, int threadNum, List<Metrics> metrics, List<List<SingleRideData>> listOfThreadData) {
         this.url = url;
         this.threadNum = threadNum;
         this.metrics = metrics;

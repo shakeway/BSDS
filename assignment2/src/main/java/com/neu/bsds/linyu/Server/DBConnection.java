@@ -9,15 +9,16 @@ import java.sql.SQLException;
  */
 public class DBConnection {
 
-    private String PUBLIC_DNS = "ec2-34-208-35-14.us-west-2.compute.amazonaws.com";
+    private String PUBLIC_DNS = "bsds.cbouijouwxsf.us-west-2.rds.amazonaws.com";
     private String PORT = "3306";
-    private String DATABASE = "dbTest";
-    private String REMOTE_DATABASE_USERNAME = "remoteu";
-    private String DATABASE_USER_PASSWORD = "localhost";
+    private String DATABASE = "mydevdb";
+    private String REMOTE_DATABASE_USERNAME = "user";
+    private String DATABASE_USER_PASSWORD = "12345678";
+    private Connection connection = null;
 
-    public void connectJDBCToAWSEC2() {
+    public DBConnection() {}
 
-
+    public Connection connectJDBCToAWSEC2() {
         System.out.println("----MySQL JDBC Connection Testing -------");
 
         try {
@@ -25,11 +26,11 @@ public class DBConnection {
         } catch (ClassNotFoundException e) {
             System.out.println("Where is your MySQL JDBC Driver?");
             e.printStackTrace();
-            return;
+            return null;
         }
 
         System.out.println("MySQL JDBC Driver Registered!");
-        Connection connection = null;
+        //Connection connection = null;
 
         try {
             connection = DriverManager.
@@ -39,15 +40,25 @@ public class DBConnection {
         }
 
         if (connection != null) {
-            System.out.println("SUCCESS!!!! You made it, take control     your database now!");
+            System.out.println("SUCCESS!!!! You made it, take control  of your database now!");
         } else {
             System.out.println("FAILURE! Failed to make connection!");
         }
 
+        return connection;
     }
 
-    public static void main(String[] args) {
-        DBConnection dbc = new DBConnection();
-        dbc.connectJDBCToAWSEC2();
+    public void disconnectJDBCToAWSEC2() {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
+
+    //only for test
+//    public static void main (String[] args) {
+//        new DBConnection().connectJDBCToAWSEC2();
+//    }
+
 }

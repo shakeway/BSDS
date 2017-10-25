@@ -1,0 +1,32 @@
+username: user
+password: 12345678
+database: mydevdb
+port 3306
+
+
+mysql -h bsds.cbouijouwxsf.us-west-2.rds.amazonaws.com  -P 3306 -u user -p
+
+
+mysql> create table single_ride(
+    -> resortID varchar(255) not null,
+    -> dayNum varchar(255) not null,
+    -> skierID varchar(255) not null,
+    -> liftID int not null,
+    -> timestamp varchar(255) not null,
+    -> id int not null auto_increment,
+    -> primary key (id)
+    -> );
+
+mysql> create table summary_ride(
+    -> dayNum varchar(255) not null,
+    -> skierID varchar(255) not null,
+    -> liftNum int not null,
+    -> vertical int not null,
+    -> id int not null auto_increment,
+    -> primary key(id)
+    -> );
+
+
+    create table single_ride(id int not null auto_increment, resortID varchar(255) not null, dayNum varchar(255) not null, skierID varchar(255) not null, liftID int not null, timestamp varchar(255) not null, primary key (id));
+
+    INSERT INTO test_table (resortID, dayNum, skierID, liftID, timestamp) VALUES ('1', '2', '3', 4, '5');

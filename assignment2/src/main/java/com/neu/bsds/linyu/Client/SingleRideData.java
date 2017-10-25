@@ -3,22 +3,23 @@ package com.neu.bsds.linyu.Client;
 /**
  * Created by linyuyu on 10/19/17.
  */
-public class SkierData {
+public class SingleRideData {
     private String resortID;
     private String dayNum;
     private String timestamp;
     private String skierID;
-    private String lieftID;
+    private int liftID;
+    private static int[] VERTICAL = {200, 300, 400, 500};
 
-    public SkierData() {
+    public SingleRideData() {
     }
 
-    public SkierData(String resortID, String dayNum, String skierID, String lieftID, String timestamp) {
+    public SingleRideData(String resortID, String dayNum, String skierID, int liftID, String timestamp) {
         this.resortID = resortID;
         this.dayNum = dayNum;
         this.timestamp = timestamp;
         this.skierID = skierID;
-        this.lieftID = lieftID;
+        this.liftID = liftID;
     }
 
     public void setResortID(String resortID) {
@@ -37,8 +38,8 @@ public class SkierData {
         this.skierID = skierID;
     }
 
-    public void setLieftID(String lieftID) {
-        this.lieftID = lieftID;
+    public void setLieftID(int liftID) {
+        this.liftID = liftID;
     }
 
     public String getResortID() {
@@ -57,7 +58,11 @@ public class SkierData {
         return skierID;
     }
 
-    public String getLieftID() {
-        return lieftID;
+    public int getLiftID() {
+        return liftID;
+    }
+
+    public int getVertical() {
+        return VERTICAL[(liftID - 1) / 10];
     }
 }
