@@ -9,46 +9,38 @@ import java.sql.SQLException;
  */
 public class DBConnection {
 
-    private String PUBLIC_DNS = "bsds.cbouijouwxsf.us-west-2.rds.amazonaws.com";
-    private String PORT = "3306";
-    private String DATABASE = "mydevdb";
-    private String REMOTE_DATABASE_USERNAME = "user";
-    private String DATABASE_USER_PASSWORD = "12345678";
-    private Connection connection = null;
+    private static String PUBLIC_DNS = "postgresql.cbouijouwxsf.us-west-2.rds.amazonaws.com";
+    private static String PORT = "5432";
+    private static String DATABASE = "mydevdb";
+    private static String REMOTE_DATABASE_USERNAME = "uuuu";
+    private static String DATABASE_USER_PASSWORD = "12345678";
 
-    public DBConnection() {}
-
-    public Connection connectJDBCToAWSEC2() {
-        System.out.println("----MySQL JDBC Connection Testing -------");
+    public static Connection getConnection() {
 
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException e) {
-            System.out.println("Where is your MySQL JDBC Driver?");
+            //System.out.println("Where is your MySQL JDBC Driver?");
             e.printStackTrace();
             return null;
         }
 
-        System.out.println("MySQL JDBC Driver Registered!");
-        //Connection connection = null;
+        //System.out.println("MySQL JDBC Driver Registered!");
+        Connection connection = null;
 
         try {
             connection = DriverManager.
-                    getConnection("jdbc:mysql://" + PUBLIC_DNS + ":" + PORT + "/" + DATABASE, REMOTE_DATABASE_USERNAME, DATABASE_USER_PASSWORD);
+                    getConnection("jdbc:postgresql://" + PUBLIC_DNS + ":" + PORT + "/" + DATABASE, REMOTE_DATABASE_USERNAME, DATABASE_USER_PASSWORD);
         } catch (SQLException e) {
-            System.out.println("Connection Failed!:\n" + e.getMessage());
+            //System.out.println("Connection Failed!:\n" + e.getMessage());
+            e.printStackTrace();
         }
 
-        if (connection != null) {
-            System.out.println("SUCCESS!!!! You made it, take control  of your database now!");
-        } else {
-            System.out.println("FAILURE! Failed to make connection!");
-        }
 
         return connection;
     }
 
-    public void disconnectJDBCToAWSEC2() {
+    public void disconnectJDBCToAWSEC2(Connection connection) {
         try {
             connection.close();
         } catch (SQLException e) {
@@ -57,8 +49,17 @@ public class DBConnection {
     }
 
     //only for test
-//    public static void main (String[] args) {
-//        new DBConnection().connectJDBCToAWSEC2();
-//    }
+    public static void main (String[] args) {
+        Connection connection = DBConnection.getConnection();
+        if (connection == null) {
+            System.out.println("null conneciton");
+        } else {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 }

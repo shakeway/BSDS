@@ -1,7 +1,11 @@
 package com.neu.bsds.linyu.Client;
 
+import com.neu.bsds.linyu.Client.DataType.SingleRideData;
+import com.neu.bsds.linyu.Client.ThreadClient.MultiThreadClient;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,12 +16,22 @@ import java.util.List;
  */
 public class StartClient {
 
+    private static String ipAddress = "34.214.88.77";
+    //private static String ipAddress = "localhost";
+    private static String port = "8080";
+    private static int threadNum = 100;
+
+    //Delimiter used in CSV file
+    private static String COMMA_DELIMITER = ",";
+    private static String NEW_LINE_SEPARATOR = "\n";
+
+    //CSV file header
+    private static String FILE_HEADER = "latency";
+
+    private static String FILE_NAME = "latency_summary.csv";
+
+
     public static void main(String[] args) {
-        String ipAddress = "34.208.35.14";
-        //String ipAddress = "localhost";
-        //String ipAddress = "34.215.68.92"; ip of Frank
-        String port = "8080";
-        int threadNum = 100;
 
         if (args.length > 0) {
             threadNum = Integer.parseInt(args[0]);
@@ -28,8 +42,7 @@ public class StartClient {
         System.out.println("port is: " + port);
         System.out.println("thread number is: " + threadNum);
 
-        String url = "http://" + ipAddress + ":" + port + "/assignment2Server";
-        //String url = "http://" + ipAddress + ":" + port + "/SkieServer"; url of Frank
+        String url = "http://" + ipAddress + ":" + port + "/assignment2";
         List<Metrics> metrics = new ArrayList<Metrics>();
 
         //read csv file
@@ -44,7 +57,7 @@ public class StartClient {
     }
 
     public static void ReadRawData(List<SingleRideData> singleRideDataList) {
-        String csvFile = "/Users/linyuyu/MyFile/NEU/courses/BSDS/assignment/assign2/BSDSAssignment2Day1.csv";
+        String csvFile = "/Users/linyuyu/MyFile/NEU/courses/BSDS/assignment/assign2/BSDSAssignment2Day1Test.csv";
         String line = "";
         String csvSplitBy = ",";
 
@@ -68,6 +81,38 @@ public class StartClient {
         for (int i = 0; i < singleRideDataList.size(); i++) {
             int index = i % threadNum;
             listOfThreadData.get(index).add(singleRideDataList.get(i));
+        }
+    }
+
+    public static void exportDataToCSV(Long[] latencyArray) {
+        FileWriter fileWriter = null;
+
+        try {
+            fileWriter = new FileWriter(FILE_NAME);
+
+            //write the CSV file header
+            fileWriter.append(FILE_HEADER.toString());
+
+            //add a new line separator after the header
+            fileWriter.append(NEW_LINE_SEPARATOR);
+
+            //write latency to the CSV file one by one
+
+            for (Long latency: latencyArray) {
+                fileWriter.append(String.valueOf(latency));
+                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(NEW_LINE_SEPARATOR);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                fileWriter.flush();
+                fileWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -107,6 +152,8 @@ public class StartClient {
         System.out.println("95th percentile latency is: " + lt95 + " ms");
         System.out.println("99th percentile latency is: " + lt99 + " ms");
         System.out.println("task done");
+
+        exportDataToCSV(latencyArray);
 
     }
 }
