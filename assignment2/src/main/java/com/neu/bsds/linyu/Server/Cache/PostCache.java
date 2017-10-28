@@ -2,7 +2,6 @@ package com.neu.bsds.linyu.Server.Cache;
 
 import com.neu.bsds.linyu.Client.DataType.SingleRideData;
 
-//import javax.inject.Singleton;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,31 +12,24 @@ import java.util.List;
 
 //@Singleton
 public class PostCache {
-    private static PostCache instance;
-    private static List<SingleRideData> cacheList;
 
-    public PostCache() {
-        cacheList = Collections.synchronizedList(new ArrayList<SingleRideData>());
-    }
+    private static List<SingleRideData> cacheList = Collections.synchronizedList(new ArrayList<SingleRideData>());
 
-    public static PostCache getInstance () {
-        if (instance == null) {
-            instance = new PostCache();
-        }
-        return instance;
-    }
-
-    public synchronized void addToCache(SingleRideData sd) {
+    public synchronized static void addToCache(SingleRideData sd) {
         cacheList.add(sd);
     }
 
-    public synchronized List<SingleRideData> getCacheList() {
+    public synchronized static List<SingleRideData> getCacheList() {
         List<SingleRideData> res = cacheList;
         res = Collections.synchronizedList(new ArrayList<SingleRideData>());
         return cacheList;
     }
 
-    public synchronized int getSize() {
+    public synchronized static int getSize() {
         return cacheList.size();
+    }
+
+    public synchronized static void cleanCache() {
+        cacheList = Collections.synchronizedList(new ArrayList<SingleRideData>());
     }
 }

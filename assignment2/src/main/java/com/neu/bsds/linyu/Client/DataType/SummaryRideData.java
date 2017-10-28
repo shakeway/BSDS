@@ -42,7 +42,7 @@ public class SummaryRideData {
         this.skierID = skierID;
     }
 
-    public void setLieftNum(int liftNum) {
+    public void setLiftNum(int liftNum) {
         this.liftNum = liftNum;
     }
 
