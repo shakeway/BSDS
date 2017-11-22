@@ -29,26 +29,4 @@ public class MyClient {
         WebTarget resource = webTarget.path("assignment2/webapi/myvert/" + sd.getSkierID() + "&" + sd.getDayNum());
         return resource.request().get();
     }
-
-    //just to check the client can send request to server
-    public static void main(String[] argv) {
-        String url = "http://localhost:8080";
-        //String url = "http://52.36.175.218:8080";
-        WebTarget webTarget = ClientBuilder.newClient().target(url);
-        MyClient mc = new MyClient(webTarget);
-
-        SingleRideData sd = new SingleRideData("0","2","1", 3, "7");
-
-        //test get method
-//        Response getResponse = mc.getData(sd);
-//        String getResult = getResponse.readEntity(String.class);
-//        System.out.println(getResponse.getStatus());
-//        System.out.println("get check: " + getResult);
-
-        //test post method
-        Response postResponse = mc.postData(sd);
-        String postResult = postResponse.readEntity(String.class);
-        System.out.println(postResponse.getStatus());
-        System.out.println("post check: " + postResult);
-    }
 }

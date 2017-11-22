@@ -85,27 +85,4 @@ public class SingleRideDAO {
         SummaryRideDAO.deleteRecord(dayNum, SingleRideDAO.getTABLENAME());
     }
 
-
-//    public static void main(String[] args) {
-//        //SingleRideDAO.insert(new SingleRideData("1","2","3", 4, "5"));
-//        Connection connection = DBConnection.getConnection();
-//        try {
-//            Statement stmt = connection.createStatement();
-//            String query = "insert into test_table (resortID, dayNum, skierID, liftID, timestamp) values('1', '2', '3', 4, '7')";
-//            stmt.executeUpdate(query);
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        try {
-//            SingleRideDAO.insert(new SingleRideData("1","1","1",1,"32"));
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//
-//        try {
-//            SingleRideDAO.deleteRecord("1");
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
 }

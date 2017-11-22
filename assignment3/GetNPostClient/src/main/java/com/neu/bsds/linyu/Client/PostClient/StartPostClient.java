@@ -43,7 +43,6 @@ public class StartPostClient {
         System.out.println("port is: " + port);
         System.out.println("thread number is: " + threadNum);
 
-        //String url = "http://" + ipAddress + ":" + port + "/assignment2";
         String url = "http://" + ipAddress + ":" + port;
         List<Metrics> metrics = new ArrayList<Metrics>();
 
@@ -59,7 +58,7 @@ public class StartPostClient {
     }
 
     public static void ReadRawData(List<SingleRideData> singleRideDataList) {
-        String csvFile = "/Users/linyuyu/MyFile/NEU/courses/BSDS/assignment/assign3/BSDSAssignment2Day999.csv";
+        String csvFile = "/Users/linyuyu/MyFile/NEU/courses/BSDS/assignment/assign3/BSDSAssignment2Day5.csv";
         String line = "";
         String csvSplitBy = ",";
 

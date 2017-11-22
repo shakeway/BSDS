@@ -48,13 +48,11 @@ public class StartSQSClient {
                 return;
             }
 
-//            System.out.format("get %d%n messages", messages.size()).println();
             for (Message message: messages) {
                 cacheMessage(message.getBody());
             }
             SQSConnection.batchDelete(messages);
 
-//            System.out.println("delete message in queue");
             startTime = currentTime;
 
         }
@@ -67,28 +65,24 @@ public class StartSQSClient {
         } else if (splitedMessage[0].equals(GET_IDENTIFIER)) {
             ServerMetricCache.add(Integer.parseInt(splitedMessage[1]), Integer.parseInt(splitedMessage[2]), 1);
         } else {
-//            System.out.println("no effective message");
+            System.out.println("no effective message");
             return;
         }
     }
 
     private static void BatchPost() {
         int s = ServerMetricCache.getSize();
-//        System.out.format("cache size is %d", s).println();
-
 
         long currentTime = System.currentTimeMillis();
         long timePeriod = currentTime - startTime;
         if (ServerMetricCache.getSize() > BATCH_SIZE || (timePeriod > PULL_CYCLE && ServerMetricCache.getSize() > 0)) {
             List<ServerMetric> cache = ServerMetricCache.getMetriCacheList();
             ServerMetricCache.cleanMetricCacheList();
-            //startTime = currentTime;
             try {
                 ServerMetricDAO.batchPost(cache);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-//            System.out.println("all messages are inserted into DB");
         }
 
 

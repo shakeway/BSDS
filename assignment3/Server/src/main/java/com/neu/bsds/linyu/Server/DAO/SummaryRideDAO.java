@@ -159,28 +159,4 @@ public class SummaryRideDAO {
             }
         }
     }
-
-//    public static void main(String[] args) {
-//        String res = "";
-//
-//        try {
-//            SummaryRideDAO.update(new SingleRideData("1", "1", "1", 5, "2"));
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//
-//        try {
-//            res = SummaryRideDAO.get("1", "1").toString();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        System.out.println(res);
-//
-//        try {
-//            SummaryRideDAO.deleteRecord("1");
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//
-//    }
 }

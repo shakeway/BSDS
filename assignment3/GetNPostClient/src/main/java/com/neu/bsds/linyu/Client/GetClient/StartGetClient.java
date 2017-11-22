@@ -14,8 +14,8 @@ import static com.neu.bsds.linyu.Client.PostClient.StartPostClient.getMetrics;
  */
 public class StartGetClient {
 
-//    private static String ipAddress = "bsds-1332599737.us-west-2.elb.amazonaws.com";
-    private static String ipAddress = "localhost";
+    private static String ipAddress = "bsds-1332599737.us-west-2.elb.amazonaws.com";
+//    private static String ipAddress = "localhost";
     private static String port = "8080";
     private static int threadNum = 100;
 
@@ -30,7 +30,6 @@ public class StartGetClient {
         System.out.println("port is: " + port);
         System.out.println("thread number is: " + threadNum);
 
-//        String url = "http://" + ipAddress + ":" + port + "/assignment2";
         String url = "http://" + ipAddress + ":" + port;
         List<Metrics> metrics = new ArrayList<Metrics>();
 
@@ -45,13 +44,9 @@ public class StartGetClient {
     }
 
     public static void createRawData(List<SingleRideData> singleRideDataList) {
-//        for (int i = 0; i < 40000; i++) {
-//            SingleRideData sd = new SingleRideData("1", String.valueOf(i + 1));
-//            singleRideDataList.add(sd);
-//        }
 
-        for (int i = 0; i < 3000; i++) {
-            SingleRideData sd = new SingleRideData("999", String.valueOf(i + 1));
+        for (int i = 0; i < 10000; i++) {
+            SingleRideData sd = new SingleRideData("4", String.valueOf(i + 1));
             singleRideDataList.add(sd);
         }
     }

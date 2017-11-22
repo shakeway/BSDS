@@ -34,7 +34,6 @@ public class Cacher {
     private static final ScheduledExecutorService publishService = Executors.newScheduledThreadPool(1);
 
     public static void start() {
-//        SQSConnection.init();
         postService.scheduleAtFixedRate(
                 new Runnable() {
                     @Override
@@ -65,9 +64,6 @@ public class Cacher {
                 SingleRideDAO.batchPost(cachedPost);
                 SummaryRideDAO.batchUpdate(cachedPost);
 
-//                List<String> cachedMessage = ServerMetricCache.getMessageCacheList();
-////                startTimePublish = currentTime;
-//                PublishToSQS(cachedMessage);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -81,7 +77,6 @@ public class Cacher {
         if (ServerMetricCache.getSize() > PUBLISH_SIZE || (timePeriod > PUBLISH_CYCLE && ServerMetricCache.getSize() != 0)) {
             List<ServerMetric> cachedMetric = ServerMetricCache.getMessageCacheList();
             startTimePublish = currentTime;
-//            PublishToSQS(cachedMessage);
             try {
                 ServerMetricDAO.batchPost(cachedMetric);
             } catch (SQLException e) {
@@ -90,9 +85,4 @@ public class Cacher {
         }
     }
 
-//    private static void PublishToSQS (List<String> messageList) {
-//        if (messageList.size() != 0) {
-//            SQSConnection.batchPublish(messageList);
-//        }
-//    }
 }

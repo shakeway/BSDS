@@ -24,7 +24,6 @@ public class ServerMetricCache {
 
     public synchronized static List<ServerMetric> getMetriCacheList () {
         List<ServerMetric> res = ServerMetricCacheList;
-        //ServerMetricCacheList = Collections.synchronizedList(new ArrayList<ServerMetric>());
         return res;
     }
 

@@ -76,24 +76,4 @@ public class ServerMetricDAO {
         }
     }
 
-
-    public static void main(String[] args) {
-        //SingleRideDAO.insert(new SingleRideData("1","2","3", 4, "5"));
-        Connection connection = DBConnection.getConnection();
-//
-//        try {
-//            insert(new ServerMetric(1, 1, 1));
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-        List<ServerMetric> test = new ArrayList<ServerMetric>();
-        test.add(new ServerMetric(2, 2, 2));
-        test.add(new ServerMetric(3, 3, 3));
-        try {
-            batchPost(test);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-    }
 }
